@@ -1,0 +1,103 @@
+body {
+    background-image: url("img/bk.png");
+    font-family: 'Raleway', sans-serif;
+}
+
+.container-fluid {
+	background-color: #333333;
+
+}
+
+.logo {
+	height: 20px;
+	margin: 30px 0px 30px 20px;
+}
+
+.panel {
+	border-color: #F79CBD;
+	text-align: center;
+	font-size: 20px;
+	width: 800px;
+	margin: 0 auto;
+	margin-bottom: 40px;
+
+}
+
+.title {
+	font-size: 25px;
+}
+.panel-body {
+	margin-top: 6px;
+	margin-bottom: 20px;
+}
+
+.btn-pink {
+	background-color: #F79CBD;
+	color: white;
+	font-size: 20px;
+	padding: 3px 8px;
+}
+
+.btn-pink.active {
+	background-color: #F36E9F;
+}
+
+.btn-pink:hover, .btn-pink:focus {
+	color: white;
+}
+
+.drag {
+	background-color: #D8D8D8;
+	border: 1px solid #979797;
+	border-radius:5px;
+    width: 270px;
+    margin: 25px auto 0;
+    padding: 5px 0;
+}
+
+.info-text {
+	vertical-align: middle;
+}
+
+.container {
+	padding-top: 30px;
+}
+
+.size {
+	font-size: 25px;
+	padding-bottom: 25px;
+}
+
+.btn-size {
+	margin-left: 20px;
+}
+
+.options {
+	float: left;
+
+}
+
+
+input[type="radio"] {
+    display:none;
+}
+
+input[type="radio"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-5px 4px 0 0;
+    vertical-align:middle;
+    background:url(img/check_radio_sheet.png) -38px top no-repeat;
+    cursor:pointer;
+}
+
+input[type="radio"]:checked + label span {
+    background:url(img/check_radio_sheet.png) -57px top no-repeat;
+}
+
+label {
+	margin-right: 10px;
+}
+
+
