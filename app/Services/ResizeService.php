@@ -15,9 +15,8 @@ class ResizeService extends BaseService
         $bgColor = $this->getBgColor($post['bgColor'], $post['customColor']);
         $margin = $post['margin'] ? $post['margin'] : "0";
 
-        //var_dump($post['file']);
         $image = Image::make($post['file']->getPathName());
-        $fileName = $post['file']->getClientOriginalName();
+        $fileName = uniqid(mt_rand(), true) . '.' . $post['file']->getClientOriginalExtension();
         $filePath = "../public/img/converted/".$fileName;
 
         if ($image->width() < $width and $image->height() < $height) {
