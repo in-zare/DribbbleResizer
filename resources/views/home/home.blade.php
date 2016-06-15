@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('header_styles')
+    <link href="{{ asset('css/progress.css') }}" rel="stylesheet" type="text/css" />
+@stop
 @section('content')
 
 <form id="dropzone" method="POST" action="/resize" enctype="multipart/form-data" class="dropzone">
@@ -47,10 +50,13 @@
         <label for="r3"><span></span>HEX <input type="text" class="jscolor" name="customColor" value="F36E9F"></label>
     </div>
 </div>
-<button type="submit" class="btn btn-pink btn-resize">Resize</button>
+<a href="#" class="btn btn-pink btn-resize progress-button" data-style="fill" data-vertical>Resize</a>
 </form>
 @endsection
 @section('footer_scripts')
     <script src="{{ asset('js/jscolor.min.js') }}"></script>
+    <script src="{{ asset('js/progress/classie.js') }}"></script>
+    <script src="{{ asset('js/progress/modernizr.custom.js') }}"></script>
+    <script src="{{ asset('js/progress/progressButton.js') }}"></script>
     <script src="{{ asset('js/home.js') }}"></script>
 @stop

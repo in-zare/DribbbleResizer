@@ -15,7 +15,7 @@ body {
     box-shadow: none;
 }
 
-.navbar, .content, .shadow, .footer {
+.navbar, .shadow > .content, .shadow, .footer {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -33,7 +33,7 @@ body {
 }
 
 
-.content {
+.shadow > .content {
     padding: 25px 0 0;
     background-image: url("../img/bk.png");
     -webkit-border-top-left-radius: 0;
@@ -168,6 +168,8 @@ label {
     display: block;
     font-size: 20px;
     padding: 5px 25px;
+    width: 112px;
+    height: 40px;
 }
 
 .footer {
@@ -218,4 +220,8 @@ input:focus {
     border-radius: 5px;
     padding: 0 10px;
     border: 1px solid #F36E9F;
+}
+
+.fa-download {
+    font-size: 25px;
 }

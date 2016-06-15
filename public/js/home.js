@@ -46,11 +46,9 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
             var fileName = ellipsisInMiddle(file.name);
             var nameElement = $(".file-name");
             var uploadElement = $(".upload");
-            var resizeBtn = $(".btn-resize");
 
             nameElement.html($("<span>").text(fileName));
 
-            resizeBtn.addClass("active");
             uploadElement.hide();
             nameElement.show();
             // Create the remove button
@@ -69,7 +67,6 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
                 _this.removeFile(file);
                 uploadElement.show();
                 nameElement.hide();
-                resizeBtn.removeClass("active");
                 // If you want to the delete the file on the server as well,
                 // you can do the AJAX request here.
             });
@@ -78,25 +75,42 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
         });
         // First change the button to actually tell Dropzone to process the queue.
         $(".btn-resize").on("click", function(e) {
-            if (!$(this).hasClass("active")) {
-                return false;
-            }
-
             e.preventDefault();
             e.stopPropagation();
             myDropzone.processQueue();
         });
 
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+            $(".progress-inner").css("height", progress + "%");
+            //document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+        });
         // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
         // of the sending event because uploadMultiple is set to true.
         this.on("sending", function() {
+            new ProgressButton(document.querySelector(".progress-button"));
+
+            // , {
+            //     callback : uploadProgress(instance)
+            // }
             // Gets triggered when the form is actually being sent.
             // Hide the success button or the complete form.
         });
         this.on("success", function(files, response) {
-            myDropzone.removeAllFiles();
-            $(".btn-resize").removeClass("active");
-            console.log(response);
+            $(".remove-file").trigger("click");
+            $(".btn-resize")
+                .addClass("active ready")
+                .removeClass("progress-button")
+                .html('<i class="fa fa-download"></i>');
+
+            var file = response.file;
+            $(".btn-resize.ready").one("click", function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                window.open("/img/converted/"+file,'_blank');
+               $(this).html("Resize").removeClass("active ready").addClass("progress-button");
+            });
+            //console.log(response);
             // Gets triggered when the files have successfully been sent.
             // Redirect user or notify of success.
         });
@@ -107,18 +121,19 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
     }
 
 };
-//
-// var myDropzone = new Dropzone("div#dropzone", {
-//     url: "/file/post",
-//     maxFiles: 1,
-//     maxFilesize: 10, //mb
-//     acceptedFiles: 'image/*',
-//     autoDiscover: false,
-//     addRemoveLinks: false,
-//     autoProcessQueue: false,
-//     clickable: ".btn-browse"
-// });
 
+function uploadProgress(instance) {
+    var progress = 0,
+        interval = setInterval( function() {
+            progress = Math.min( progress + Math.random() * 0.1, 1 );
+            instance._setProgress( progress );
+
+            if( progress === 1 ) {
+                instance._stop(1);
+                clearInterval( interval );
+            }
+        }, 200 );
+}
 
 function ellipsisInMiddle(str) {
     if (str.length > 25) {
