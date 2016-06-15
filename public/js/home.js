@@ -43,6 +43,13 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
         });
 
         myDropzone.on("addedfile", function(file) {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'Upload',
+                eventAction: 'addedfile',
+                eventLabel: 'Just Checking'
+            });
+
             var fileName = ellipsisInMiddle(file.name);
             var nameElement = $(".file-name");
             var uploadElement = $(".upload");
@@ -93,6 +100,13 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
             // Hide the success button or the complete form.
         });
         this.on("success", function(files, response) {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'Upload',
+                eventAction: 'fileconverted',
+                eventLabel: 'Just Checking'
+            });
+
             $(".remove-file").trigger("click");
             $(".btn-resize")
                 .addClass("active ready")
@@ -103,6 +117,14 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
             $(".btn-resize.ready").one("click", function(e){
                 e.preventDefault();
                 e.stopPropagation();
+
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'Upload',
+                    eventAction: 'filedownloaded',
+                    eventLabel: 'Just Checking'
+                });
+
                 $('<form action="/done" method="POST">' +
                     '<input type="hidden" name="file" value="' + file + '">' +
                     '</form>').submit();
