@@ -21,7 +21,7 @@ class ResizeService extends BaseService
 
         if ($image->width() < $width and $image->height() < $height) {
             $image->resizeCanvas($width, $height, 'center', false, $bgColor);
-            $image->save($filePath);
+            $image->save($filePath, 100);
             return $fileName;
         }
 
@@ -36,7 +36,7 @@ class ResizeService extends BaseService
         });
 
         $image->resizeCanvas($width, $height, 'center', false, $bgColor);
-        $image->save($filePath);
+        $image->save($filePath, 100);
 
         return $fileName;
     }
