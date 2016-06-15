@@ -89,10 +89,6 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
         // of the sending event because uploadMultiple is set to true.
         this.on("sending", function() {
             new ProgressButton(document.querySelector(".progress-button"));
-
-            // , {
-            //     callback : uploadProgress(instance)
-            // }
             // Gets triggered when the form is actually being sent.
             // Hide the success button or the complete form.
         });
@@ -101,16 +97,18 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
             $(".btn-resize")
                 .addClass("active ready")
                 .removeClass("progress-button")
-                .html('<i class="fa fa-download"></i>');
+                .text("Download");
 
             var file = response.file;
             $(".btn-resize.ready").one("click", function(e){
                 e.preventDefault();
                 e.stopPropagation();
-                window.open("/img/converted/"+file,'_blank');
-               $(this).html("Resize").removeClass("active ready").addClass("progress-button");
+                $('<form action="/done" method="POST">' +
+                    '<input type="hidden" name="file" value="' + file + '">' +
+                    '</form>').submit();
+
+               $(this).text("Resize").removeClass("active ready").addClass("progress-button");
             });
-            //console.log(response);
             // Gets triggered when the files have successfully been sent.
             // Redirect user or notify of success.
         });
@@ -121,19 +119,6 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
     }
 
 };
-
-function uploadProgress(instance) {
-    var progress = 0,
-        interval = setInterval( function() {
-            progress = Math.min( progress + Math.random() * 0.1, 1 );
-            instance._setProgress( progress );
-
-            if( progress === 1 ) {
-                instance._stop(1);
-                clearInterval( interval );
-            }
-        }, 200 );
-}
 
 function ellipsisInMiddle(str) {
     if (str.length > 25) {

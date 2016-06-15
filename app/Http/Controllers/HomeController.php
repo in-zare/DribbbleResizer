@@ -27,4 +27,18 @@ class HomeController extends Controller
             'file' => $fileName
         ]);
     }
+
+    public function done(Request $request)
+    {
+        $file = $request->get('file', null);
+
+        if (empty($file)) {
+            return redirect('home/dashboard');
+        }
+
+        $filePath = "../public/img/converted/". $file;
+        $response = response()->download($filePath)->deleteFileAfterSend(true);
+
+        return $response;
+    }
 }

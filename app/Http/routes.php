@@ -16,6 +16,4 @@ Route::get("/", "HomeController@index");
 
 Route::post("/resize", "HomeController@resize");
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::post("/done", "HomeController@done");

@@ -50,7 +50,7 @@
         <label for="r3"><span></span>HEX <input type="text" class="jscolor" name="customColor" value="F36E9F"></label>
     </div>
 </div>
-<a href="#" class="btn btn-pink btn-resize progress-button" data-style="fill" data-vertical>Resize</a>
+<button class="btn btn-pink btn-resize progress-button" data-style="fill" data-vertical>Resize</button>
 </form>
 @endsection
 @section('footer_scripts')
