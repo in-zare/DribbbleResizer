@@ -43,7 +43,7 @@
     @include('meta')
 </head>
 <body>
-{{--@include('analytics')--}}
+@include('analytics')
 <div class="shadow">
     <nav class="navbar">
         <div class="container-fluid">
@@ -64,7 +64,6 @@
 </div>
 <!-- global js -->
 <script src=" {{ asset('js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
-<script src=" {{ asset('js/dropzone.js') }}" type="text/javascript"></script>
 <!-- begin page level js -->
 @yield('footer_scripts')
 

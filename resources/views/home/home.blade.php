@@ -54,6 +54,7 @@
 </form>
 @endsection
 @section('footer_scripts')
+    <script src="{{ asset('js/dropzone.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/jscolor.min.js') }}"></script>
     <script src="{{ asset('js/progress/classie.js') }}"></script>
     <script src="{{ asset('js/progress/modernizr.custom.js') }}"></script>
