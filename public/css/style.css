@@ -126,6 +126,8 @@ body {
 	float: left;
 }
 
+
+
 input[type="radio"] {
     display:none;
 }
@@ -218,4 +220,16 @@ input:focus {
     border-radius: 5px;
     padding: 0 10px;
     border: 1px solid #F36E9F;
+}
+
+@media (max-width:1200px) {
+    body {
+        padding: 0;
+    }
+}
+
+@media (max-width:700px) {
+    .panel {
+        width: 90%;
+    }
 }
