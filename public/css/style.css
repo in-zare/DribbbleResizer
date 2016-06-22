@@ -222,6 +222,14 @@ input:focus {
     border: 1px solid #F36E9F;
 }
 
+#preview-container .bg {
+    background-color: #fff; border: 1px solid #000; width: 402px; height: 302px; margin: 0 auto;
+}
+
+.panel-preview {
+    display: none;
+}
+
 @media (max-width:1200px) {
     body {
         padding: 0;

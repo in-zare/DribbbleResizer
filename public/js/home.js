@@ -1,12 +1,13 @@
 $(function(){
     $(".jscolor").on("click", function(){
-        $("#r3").prop("checked", true)
+        $("#r3").prop("checked", true).trigger("change");
     });
 
     $(".btn-size").on("click", function(e){
         $(".btn-size").removeClass("active");
         $(this).addClass("active");
         $("#image-size").val($(this).text());
+        updatePreview();
     });
 
     $(".btn-browse, .info-text").on("click", function (e){
@@ -22,7 +23,28 @@ $(function(){
     $(".drop-here").on("click", function(e) {
         $(this).hide();
     });
+
+    $('input[type=radio][name=bgColor]').change(function(e) {
+        var color = "#fff";
+        if (this.value == 'black') {
+            color = "#000";
+        }
+        else if (this.value == 'custom') {
+            color = "#" + $(".jscolor").val();
+        }
+
+        $(".bg").css("background-color", color);
+    });
+
+    $(".margin-input").keyup(function(e) {
+        updatePreview();
+    });
+
 });
+
+var preview = $("#preview");
+previewTemplate = preview[0].outerHTML;
+preview.remove();
 
 Dropzone.options.dropzone = { // The camelized version of the ID of the form element
     maxFiles: 1,
@@ -33,6 +55,10 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
     autoProcessQueue: false,
     clickable: ".btn-browse",
     dictDefaultMessage: '',
+    previewsContainer: "#preview-container",
+    previewTemplate: previewTemplate,
+    thumbnailWidth: null,
+    thumbnailHeight: null,
 
     // The setting up of the dropzone
     init: function() {
@@ -48,6 +74,11 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
                 eventCategory: 'Upload',
                 eventAction: 'addedfile',
                 eventLabel: 'Just Checking'
+            });
+
+            myDropzone.on("thumbnail", function(file){
+                updatePreview();
+                $(".panel-preview").show();
             });
 
             var fileName = ellipsisInMiddle(file.name);
@@ -73,6 +104,7 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
                 // Remove the file preview.
                 _this.removeFile(file);
                 uploadElement.show();
+                $(".panel-preview").hide();
                 nameElement.hide();
                 // If you want to the delete the file on the server as well,
                 // you can do the AJAX request here.
@@ -142,7 +174,61 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
 
 };
 
-function ellipsisInMiddle(str) {
+function updatePreview()
+{
+    var preview = $("#preview");
+    var img = preview.find("img")[0];
+    var imgHeight = img.naturalHeight;
+    var imgWidth = img.naturalWidth;
+
+    var canvas = getCanvasSize();
+    var imageMargin = parseInt($(".margin-input").val());
+
+    if (canvas.width == 800) {
+        imgWidth = imgWidth/2;
+        imgHeight = imgHeight/2;
+
+        img.style.width = imgWidth;
+        img.style.height = imgHeight;
+
+        imageMargin = imageMargin/2;
+    } else {
+        img.style.width = "";
+        img.style.height = "";
+    }
+
+    if (imgWidth < 400 && imgHeight < 300) {
+        img.style.marginTop = (300-imgHeight)/2;
+    } else if (imgWidth > imgHeight) {
+        img.style.width = 400 - (imageMargin*2);
+        img.style.height = "";
+        //couldn't get the height of the image for just 1 image
+        setTimeout(function(){
+            img.style.marginTop = (300-img.height)/2;
+        }, 100);
+    } else {
+        img.style.height = 300 - (imageMargin*2);
+        img.style.width = "";
+        img.style.marginTop = imageMargin;
+    }
+}
+
+function getCanvasSize()
+{
+    var sizes = $(".btn-size.active").text();
+    sizes = sizes.split("x");
+    return {
+        'width': parseInt(sizes[0]),
+        'height': parseInt(sizes[1])
+    };
+}
+
+function updateBg(jscolor) {
+    $(".bg").css("background-color", "#" + jscolor);
+}
+
+function ellipsisInMiddle(str)
+{
     if (str.length > 25) {
         return str.substr(0, 15) + '…' + str.substr(str.length-7, str.length);
     }
