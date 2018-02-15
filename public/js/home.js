@@ -77,7 +77,10 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
             });
 
             myDropzone.on("thumbnail", function(file){
-                updatePreview();
+                setTimeout(function(){
+                    updatePreview();
+                }, 100);
+                
                 $(".panel-preview").show();
             });
 
@@ -157,9 +160,12 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
                     eventLabel: 'Just Checking'
                 });
 
-                $('<form action="/done" method="POST">' +
+                var form = $('<form id="download-form" action="/done" method="POST">' +
                     '<input type="hidden" name="file" value="' + file + '">' +
-                    '</form>').submit();
+                    '</form>');
+
+                $(document.body).append(form);
+                $("#download-form").submit();
 
                $(this).text("Resize").removeClass("active ready").addClass("progress-button");
             });
