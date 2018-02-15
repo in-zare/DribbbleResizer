@@ -58,7 +58,7 @@
         @yield('content')
 
         <div class="footer">
-            Created by <a target="_blank" href="http://inzare.com">Iulia</a> & <a target="_blank" href="http://feh.im">Fehim</a>
+            Created by <a target="_blank" href="https://iulia.co">Iulia</a> & <a target="_blank" href="https://feh.im">Fehim</a>
         </div>
     </div>
 </div>
