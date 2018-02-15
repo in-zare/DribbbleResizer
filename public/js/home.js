@@ -165,7 +165,7 @@ Dropzone.options.dropzone = { // The camelized version of the ID of the form ele
                     '</form>');
 
                 $(document.body).append(form);
-                $("#download-form").submit();
+                $("#download-form").submit().remove();
 
                $(this).text("Resize").removeClass("active ready").addClass("progress-button");
             });
